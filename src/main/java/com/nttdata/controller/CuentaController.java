@@ -1,5 +1,6 @@
 package com.nttdata.controller;
 
+import com.nttdata.dto.CuentaDto;
 import com.nttdata.services.ICuentaServicio;
 import com.nttdata.vo.request.AccountRequestVO;
 import com.nttdata.vo.response.AccountResponseVO;
@@ -24,18 +25,18 @@ public class CuentaController {
     private ICuentaServicio cuentaServicio;
 
     @PostMapping
-    public Mono<ResponseEntity<AccountResponseVO>> registrar(@RequestBody AccountRequestVO request){
+    public Mono<ResponseEntity<CuentaDto>> registrar(@RequestBody CuentaDto request){
         return cuentaServicio.registrar(request)
                 .map(response -> ResponseEntity.ok().body(response));
     }
 
     @GetMapping
-    public Mono<ResponseEntity<Flux<AccountResponseVO>>> listar(){
+    public Mono<ResponseEntity<Flux<CuentaDto>>> listar(){
         return Mono.just(ResponseEntity.ok().body(cuentaServicio.listar()));
     }
 
     @PutMapping("/{idCuenta}")
-    public Mono<ResponseEntity<String>> actualizar(@PathVariable Long idCuenta, @RequestBody AccountRequestVO request){
+    public Mono<ResponseEntity<String>> actualizar(@PathVariable Long idCuenta, @RequestBody CuentaDto request){
         return cuentaServicio.actualizar(idCuenta, request)
                 .thenReturn(ResponseEntity.ok().body("Account updated successfully"));
     }

@@ -131,7 +131,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"accountNumber\": \"478754\",\r\n    \"accountType\": \"A\",\r\n    \"initialBalance\": 2000,\r\n    \"status\": true,\r\n    \"id\":2\r\n    \r\n}",
+							"raw": "{\r\n    \"numeroCuenta\": \"696969\",\r\n    \"tipoCuenta\": \"A\",\r\n    \"saldoInicial\": 2000,\r\n    \"estado\": true,\r\n    \"idCliente\":2\r\n    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -178,7 +178,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"idCuenta\":3,\r\n    \"numeroCuenta\": 225487,\r\n    \"tipoCuenta\": \"C\",\r\n    \"saldoInicial\":100,\r\n    \"estado\": true,\r\n    \"idCliente\":2\r\n}",
+							"raw": "{\r\n    \"idCuenta\":13,\r\n    \"numeroCuenta\": \"123456\",\r\n    \"tipoCuenta\": \"C\",\r\n    \"saldoInicial\":2000,\r\n    \"estado\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -186,16 +186,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8090/ms-nndata/api/account",
+							"raw": "http://localhost:8090/cuentas/13",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8090",
 							"path": [
-								"ms-nndata",
-								"api",
-								"account"
+								"cuentas",
+								"13"
 							]
 						}
 					},
@@ -207,17 +206,15 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/ms-nndata/api/account/3",
+							"raw": "http://localhost:8090/cuentas/9",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8090",
 							"path": [
-								"ms-nndata",
-								"api",
-								"account",
-								"3"
+								"cuentas",
+								"9"
 							]
 						}
 					},
@@ -325,17 +322,15 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/ms-nndata/api/movimientos/2",
+							"raw": "http://localhost:8090/movimientos/17",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8090",
 							"path": [
-								"ms-nndata",
-								"api",
 								"movimientos",
-								"2"
+								"17"
 							]
 						}
 					},

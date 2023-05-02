@@ -18,7 +18,7 @@ import reactor.test.StepVerifier;
 @SpringBootTest
 @ContextConfiguration(classes = {AccountServiceImplTest.class})
 class AccountServiceImplTest {
-/*
+
     @Mock
     private CuentaRepository cuentaRepository;
     @Mock
@@ -26,9 +26,9 @@ class AccountServiceImplTest {
     @InjectMocks
     private CuentaServicioImpl accountService;
 
-    @Test
+   /* @Test
     void create() {
-        Mockito.when(clienteRepository.findByIdentificacion(Mockito.any()))
+        Mockito.when(clienteRepository.findById(Mockito.anyLong()))
                         .thenReturn(Mono.just(MockUtils.buildClient()));
         Mockito.when(cuentaRepository.save(Mockito.any()))
                 .thenReturn(Mono.just(MockUtils.buildAccount()));

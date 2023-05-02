@@ -3,6 +3,7 @@
  */
 package com.nttdata.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nttdata.enums.TipoCuentaEnum;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -23,9 +24,11 @@ import java.math.BigDecimal;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CuentaDto {
     private Long idCuenta;
-    private Integer idCliente;
     private String numeroCuenta;
     private TipoCuentaEnum tipoCuenta;
     private BigDecimal saldoInicial;
     private Boolean estado;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long idCliente;
+    private String name;
 }

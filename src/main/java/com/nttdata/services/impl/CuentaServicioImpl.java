@@ -1,6 +1,7 @@
 package com.nttdata.services.impl;
 
 import com.nttdata.common.exception.BankError;
+import com.nttdata.dto.CuentaDto;
 import com.nttdata.enums.TipoCuentaEnum;
 import com.nttdata.model.Cuenta;
 import com.nttdata.repository.CuentaRepository;
@@ -27,41 +28,32 @@ public class CuentaServicioImpl implements ICuentaServicio {
     @Autowired
     private ClienteRepository clienteRepository;
     @Autowired
-    @Qualifier("modelMapper")
+    @Qualifier("cuentaMapper")
     private ModelMapper mapper;
 
     @Override
     @Transactional
-    public Mono<AccountResponseVO> registrar(AccountRequestVO request) {
+    public Mono<CuentaDto> registrar(CuentaDto request) {
         log.info("Create account ");
-        return clienteRepository.findById(request.getId())
+        return clienteRepository.findById(request.getIdCliente())
                 .onErrorResume(error -> {
                     log.error("An error occurred while searching for the client. Detail = {}", error.getMessage());
                     return Mono.error(BankError.NTT001);
                 })
                 .doOnSuccess(success -> log.info("Client successfully obtained"))
                 .flatMap(client -> {
-                            Cuenta account = new Cuenta();
-                            account.setNumeroCuenta(request.getAccountNumber());
-                            account.setTipoCuenta(TipoCuentaEnum.valueOf(request.getAccountType()));
-                            account.setSaldoInicial(request.getInitialBalance());
-                            account.setEstado(request.getStatus());
-                            account.setIdCliente(client.getIdCliente());
-
-                            return cuentaRepository.save(account)
+                            Cuenta cuenta = mapper.map(request, Cuenta.class);
+                            cuenta.setIdCliente(client.getIdCliente());
+                            return cuentaRepository.save(cuenta)
                                     .onErrorResume(error -> {
                                         log.error("An error occurred while trying to save the customer account. Detail = {}", error.getMessage());
                                         return Mono.error(BankError.NTT002);
                                     })
                                     .doOnSuccess(success -> log.info("Customer account successfully saved"))
                                     .map(accountResponse -> {
-                                        AccountResponseVO accountResponseVO = new AccountResponseVO();
-                                        accountResponseVO.setAccountNumber(accountResponse.getNumeroCuenta());
-                                        accountResponseVO.setAccountType(accountResponse.getTipoCuenta().getDescripcion());
-                                        accountResponseVO.setInitialBalance(accountResponse.getSaldoInicial());
-                                        accountResponseVO.setStatus(accountResponse.getEstado());
-                                        accountResponseVO.setName(client.getNombre());
-                                        return accountResponseVO;
+                                        CuentaDto cuentaDto = mapper.map(accountResponse, CuentaDto.class);
+                                        cuentaDto.setName(client.getNombre());
+                                        return cuentaDto;
                                     });
                         }
                 )
@@ -69,7 +61,7 @@ public class CuentaServicioImpl implements ICuentaServicio {
     }
 
     @Override
-    public Flux<AccountResponseVO> listar() {
+    public Flux<CuentaDto> listar() {
         log.info("List all accounts");
         return cuentaRepository.findAll()
                 .onErrorResume(error -> {
@@ -78,29 +70,28 @@ public class CuentaServicioImpl implements ICuentaServicio {
                 })
                 .flatMap(account -> clienteRepository.findById(account.getIdCliente())
                         .map(client -> {
-                            AccountResponseVO accountResponseVO = new AccountResponseVO();
+                            CuentaDto cuentaDto = mapper.map(account, CuentaDto.class);
+                            cuentaDto.setName(client.getNombre());
+                            return cuentaDto;
+                            /*AccountResponseVO accountResponseVO = new AccountResponseVO();
                             accountResponseVO.setAccountNumber(account.getNumeroCuenta());
                             accountResponseVO.setAccountType(account.getTipoCuenta().getDescripcion());
                             accountResponseVO.setInitialBalance(account.getSaldoInicial());
                             accountResponseVO.setStatus(account.getEstado());
-                            accountResponseVO.setName(client.getNombre());
-                            return accountResponseVO;
+                            accountResponseVO.setName(client.getNombre());*/
+                            //return accountResponseVO;
                         }));
     }
 
     @Override
     @Transactional
-    public Mono<Void> actualizar(Long idAccount, AccountRequestVO request) {
-            log.info("Start account update process");
-        return Mono.just(request)
-                .flatMap(accountRequestVO -> {
-                    Cuenta account = new Cuenta();
-                    account.setIdCuenta(accountRequestVO.getId());
-                    account.setNumeroCuenta(accountRequestVO.getAccountNumber());
-                    account.setTipoCuenta(TipoCuentaEnum.valueOf(accountRequestVO.getAccountType()));
-                    account.setSaldoInicial(accountRequestVO.getInitialBalance());
-                    account.setEstado(accountRequestVO.getStatus());
-                    return cuentaRepository.save(account)
+    public Mono<Void> actualizar(Long idAccount, CuentaDto request) {
+        log.info("Start account update process");
+        return cuentaRepository.findById(request.getIdCuenta())
+                .flatMap(cuentaResponse -> {
+                    Cuenta cuenta = mapper.map(request, Cuenta.class);
+                    cuenta.setIdCliente(cuentaResponse.getIdCliente());
+                    return cuentaRepository.save(cuenta)
                             .onErrorResume(error -> {
                                 log.error("An error occurred while updating the customer account. Detail = {}", error.getMessage());
                                 return Mono.error(BankError.NTT004);
@@ -112,9 +103,9 @@ public class CuentaServicioImpl implements ICuentaServicio {
 
     @Override
     @Transactional
-    public Mono<Void> eliminar(Long idAccount) {
+    public Mono<Void> eliminar(Long idCuenta) {
         log.info("Start account deletion process");
-        return cuentaRepository.deleteById(idAccount)
+        return cuentaRepository.deleteById(idCuenta)
                 .onErrorResume(error -> {
                     log.error("An error occurred while deleting the customer account. Detail = {}", error.getMessage());
                     return Mono.error(BankError.NTT005);
