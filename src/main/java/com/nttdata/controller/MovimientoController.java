@@ -4,6 +4,7 @@ import com.nttdata.dto.MovimientoDto;
 import com.nttdata.services.IMovimientoServicio;
 import com.nttdata.vo.response.MovementResponseVO;
 import com.nttdata.vo.response.StatementResponseVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -16,7 +17,7 @@ import java.sql.Date;
 @RequestMapping("/movimientos")
 public class MovimientoController {
 
-    @Resource
+    @Autowired
     private IMovimientoServicio movimientoServicio;
 
     @PostMapping

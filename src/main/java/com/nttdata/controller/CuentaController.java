@@ -2,8 +2,6 @@ package com.nttdata.controller;
 
 import com.nttdata.dto.CuentaDto;
 import com.nttdata.services.ICuentaServicio;
-import com.nttdata.vo.request.AccountRequestVO;
-import com.nttdata.vo.response.AccountResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

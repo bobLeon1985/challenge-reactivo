@@ -2,13 +2,10 @@ package com.nttdata.services.impl;
 
 import com.nttdata.common.exception.BankError;
 import com.nttdata.dto.CuentaDto;
-import com.nttdata.enums.TipoCuentaEnum;
 import com.nttdata.model.Cuenta;
 import com.nttdata.repository.CuentaRepository;
 import com.nttdata.repository.ClienteRepository;
 import com.nttdata.services.ICuentaServicio;
-import com.nttdata.vo.request.AccountRequestVO;
-import com.nttdata.vo.response.AccountResponseVO;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,13 +70,6 @@ public class CuentaServicioImpl implements ICuentaServicio {
                             CuentaDto cuentaDto = mapper.map(account, CuentaDto.class);
                             cuentaDto.setName(client.getNombre());
                             return cuentaDto;
-                            /*AccountResponseVO accountResponseVO = new AccountResponseVO();
-                            accountResponseVO.setAccountNumber(account.getNumeroCuenta());
-                            accountResponseVO.setAccountType(account.getTipoCuenta().getDescripcion());
-                            accountResponseVO.setInitialBalance(account.getSaldoInicial());
-                            accountResponseVO.setStatus(account.getEstado());
-                            accountResponseVO.setName(client.getNombre());*/
-                            //return accountResponseVO;
                         }));
     }
 
