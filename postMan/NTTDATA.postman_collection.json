@@ -297,7 +297,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"date\":\"2023-04-21T00:00:00\",\r\n    \"movementType\":\"D\",\r\n    \"value\":100,\r\n    \"accountNumber\":\"478754\",\r\n    \"accountType\":\"A\"\r\n}",
+							"raw": "{\r\n    \"date\":\"2023-04-21T00:00:00\",\r\n    \"movementType\":\"D\",\r\n    \"value\":2000,\r\n    \"accountNumber\":\"478754\",\r\n    \"accountType\":\"A\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -381,15 +381,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/ms-nndata/api/movimientos/reporte?fechaInicio=2023-04-20&fechaFin=2023-04-22&idCliente=1",
+							"raw": "http://localhost:8090/movimientos/reporte?fechaInicio=2023-04-20&fechaFin=2023-04-22&identificacion=0704907922",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8090",
 							"path": [
-								"ms-nndata",
-								"api",
 								"movimientos",
 								"reporte"
 							],
@@ -403,8 +401,8 @@
 									"value": "2023-04-22"
 								},
 								{
-									"key": "idCliente",
-									"value": "1"
+									"key": "identificacion",
+									"value": "0704907922"
 								}
 							]
 						}
