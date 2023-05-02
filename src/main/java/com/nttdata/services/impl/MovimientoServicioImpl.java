@@ -37,7 +37,7 @@ public class MovimientoServicioImpl implements IMovimientoServicio {
     @Override
     @Transactional
     public Mono<MovementResponseVO> registrar(MovimientoDto request) {
-        log.info("Creacion de movimientos");
+        log.info("Creation of movimientos");
         return cuentaRepository.findByNumeroCuentaByTipoCuenta(request.getAccountNumber(), request.getAccountType())
                 .flatMap(account -> Mono.zip(
                                         movimientoRepository.getBalance(account.getIdCuenta(), "D").switchIfEmpty(Mono.just(0.00)),

@@ -44,8 +44,8 @@ public class MovimientoController {
 
     @GetMapping("/reporte")
     public Mono<ResponseEntity<Flux<StatementResponseVO>>> reporte(@RequestParam Date fechaInicio, @RequestParam Date fechaFin,
-                                                                   @RequestParam String identification) {
-        return Mono.just(ResponseEntity.ok().body(movimientoServicio.reporte(fechaInicio, fechaFin, identification)));
+                                                                   @RequestParam String identificacion) {
+        return Mono.just(ResponseEntity.ok().body(movimientoServicio.reporte(fechaInicio, fechaFin, identificacion)));
     }
 
 }
