@@ -27,7 +27,7 @@ class ClientControllerTest {
 
     @Test
     void create() {
-        Mockito.when(clienteServicio.create(Mockito.any()))
+        Mockito.when(clienteServicio.registrar(Mockito.any()))
                 .thenReturn(Mono.just(new ClienteDto()));
         StepVerifier.create(clienteController.registrar(MockUtils.buildClientDto()))
                 .consumeNextWith(response -> Assertions.assertEquals(HttpStatus.OK, response.getStatusCode()))
@@ -37,7 +37,7 @@ class ClientControllerTest {
 
     @Test
     void allClient() {
-        Mockito.when(clienteServicio.allClient())
+        Mockito.when(clienteServicio.listar())
                 .thenReturn(Flux.just(MockUtils.buildClientDto()));
         StepVerifier.create(clienteController.listar())
                 .consumeNextWith(response -> Assertions.assertEquals(HttpStatus.OK, response.getStatusCode()))
@@ -47,7 +47,7 @@ class ClientControllerTest {
 
     @Test
     void update() {
-        Mockito.when(clienteServicio.update(Mockito.any(), Mockito.any()))
+        Mockito.when(clienteServicio.actualizar(Mockito.any(), Mockito.any()))
                 .thenReturn(Mono.empty());
         StepVerifier.create(clienteController.actualizar(1L, MockUtils.buildClientDto()))
                 .consumeNextWith(response -> Assertions.assertEquals(HttpStatus.OK, response.getStatusCode()))
@@ -57,7 +57,7 @@ class ClientControllerTest {
 
     @Test
     void delete() {
-        Mockito.when(clienteServicio.delete(Mockito.any()))
+        Mockito.when(clienteServicio.eliminar(Mockito.any()))
                 .thenReturn(Mono.empty());
         StepVerifier.create(clienteController.eliminar(1L))
                 .consumeNextWith(response -> Assertions.assertEquals(HttpStatus.OK, response.getStatusCode()))

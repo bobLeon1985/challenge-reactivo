@@ -17,24 +17,24 @@ public class ClienteController {
 
     @PostMapping
     public Mono<ResponseEntity<ClienteDto>> registrar(@RequestBody ClienteDto request){
-        return clienteServicio.create(request)
+        return clienteServicio.registrar(request)
                 .map(response -> ResponseEntity.ok().body(response));
     }
 
     @GetMapping
     public Mono<ResponseEntity<Flux<ClienteDto>>> listar(){
-        return Mono.just(ResponseEntity.ok().body(clienteServicio.allClient()));
+        return Mono.just(ResponseEntity.ok().body(clienteServicio.listar()));
     }
 
-    @PutMapping("/{idClient}")
-    public Mono<ResponseEntity<String>> actualizar(@PathVariable Long idClient, @RequestBody ClienteDto request){
-        return clienteServicio.update(idClient, request)
+    @PutMapping("/{idCliente}")
+    public Mono<ResponseEntity<String>> actualizar(@PathVariable Long idCliente, @RequestBody ClienteDto request){
+        return clienteServicio.actualizar(idCliente, request)
                 .thenReturn(ResponseEntity.ok().body("User updated successfully"));
     }
 
     @DeleteMapping("/{idClient}")
-    public Mono<ResponseEntity<String>> eliminar(@PathVariable Long idClient){
-        return clienteServicio.delete(idClient)
+    public Mono<ResponseEntity<String>> eliminar(@PathVariable Long idCliente){
+        return clienteServicio.eliminar(idCliente)
                 .thenReturn(ResponseEntity.ok().body("User deleted successfully"));
     }
 }

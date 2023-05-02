@@ -27,7 +27,7 @@ public class ClienteServicioImpl implements IClienteServicio {
 
     @Override
     @Transactional
-    public Mono<ClienteDto> create(ClienteDto request) {
+    public Mono<ClienteDto> registrar(ClienteDto request) {
         Cliente cliente = mapper.map(request ,Cliente.class);
         return clienteRepository.save(cliente)
                 .onErrorResume(error -> {
@@ -39,7 +39,7 @@ public class ClienteServicioImpl implements IClienteServicio {
     }
 
     @Override
-    public Flux<ClienteDto> allClient() {
+    public Flux<ClienteDto> listar() {
         return clienteRepository.findAll()
                 .onErrorResume(error -> {
                     log.error("An error occurred while searching for customers. Detail = {}", error.getMessage());
@@ -50,7 +50,7 @@ public class ClienteServicioImpl implements IClienteServicio {
 
     @Override
     @Transactional
-    public Mono<Void> update(Long idClient, ClienteDto request) {
+    public Mono<Void> actualizar(Long idClient, ClienteDto request) {
        return clienteRepository.findById(idClient)
                .map(cliente -> {
                    request.setIdCliente(idClient);
@@ -67,7 +67,7 @@ public class ClienteServicioImpl implements IClienteServicio {
 
     @Override
     @Transactional
-    public Mono<Void> delete(Long idClient) {
+    public Mono<Void> eliminar(Long idClient) {
        return clienteRepository.deleteById(idClient)
                .onErrorResume(error -> {
                    log.error("An error occurred while deleting the client. Detail = {}", error.getMessage());

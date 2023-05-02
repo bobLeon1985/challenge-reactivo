@@ -127,8 +127,8 @@ public class MovimientoServicioImpl implements IMovimientoServicio {
 
     @Override
     @Transactional
-    public Mono<Void> eliminar(Long idMovement) {
-        return movimientoRepository.deleteById(idMovement)
+    public Mono<Void> eliminar(Long idMovimiento) {
+        return movimientoRepository.deleteById(idMovimiento)
                 .doOnSuccess(success -> log.info("Move successfully removed"));
 
     }

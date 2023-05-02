@@ -8,11 +8,11 @@ import reactor.core.publisher.Mono;
 @Validated
 public interface IClienteServicio {
 
-    Mono<ClienteDto> create(ClienteDto request);
+    Mono<ClienteDto> registrar(ClienteDto request);
 
-    Flux<ClienteDto> allClient();
+    Flux<ClienteDto> listar();
 
-    Mono<Void> update(Long idClient, ClienteDto request);
+    Mono<Void> actualizar(Long idClient, ClienteDto request);
 
-    Mono<Void> delete(Long idClient);
+    Mono<Void> eliminar(Long idClient);
 }
