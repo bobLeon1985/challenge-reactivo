@@ -2,239 +2,313 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.8
--- Dumped by pg_dump version 12.8
+-- Dumped from database version 9.4.26
+-- Dumped by pg_dump version 9.4.26
+-- Started on 2023-05-02 10:47:22
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
-SET row_security = off;
-
---
--- Name: nttdata; Type: DATABASE; Schema: -; Owner: postgres
---
-
-CREATE DATABASE nttdata WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'Spanish_Ecuador.1252' LC_CTYPE = 'Spanish_Ecuador.1252';
-
-
-ALTER DATABASE nttdata OWNER TO postgres;
-
-\connect nttdata
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
 
 SET default_tablespace = '';
 
-SET default_table_access_method = heap;
+SET default_with_oids = false;
 
 --
--- Name: account; Type: TABLE; Schema: public; Owner: postgres
+-- TOC entry 174 (class 1259 OID 150998)
+-- Name: cliente; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
 --
 
-CREATE TABLE public.account (
-    id_account bigint NOT NULL,
-    account_number character varying(255) NOT NULL,
-    account_type character varying(255) NOT NULL,
-    fk_client bigint NOT NULL,
-    initial_balance double precision NOT NULL,
-    status boolean NOT NULL
+CREATE TABLE public.cliente (
+    id_cliente integer NOT NULL,
+    direccion character varying(100) NOT NULL,
+    edad integer NOT NULL,
+    genero character varying(1) NOT NULL,
+    identificacion character varying(10) NOT NULL,
+    nombre character varying(100) NOT NULL,
+    telefono character varying(10) NOT NULL,
+    contrasenia character varying(255) NOT NULL,
+    estado boolean NOT NULL
 );
 
 
-ALTER TABLE public.account OWNER TO postgres;
+ALTER TABLE public.cliente OWNER TO postgres;
 
 --
--- Name: client; Type: TABLE; Schema: public; Owner: postgres
+-- TOC entry 173 (class 1259 OID 150996)
+-- Name: cliente_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.client (
-    id_client bigint NOT NULL,
-    address character varying(255) NOT NULL,
-    age integer NOT NULL,
-    gender character varying(255) NOT NULL,
-    identification character varying(255) NOT NULL,
-    name character varying(255) NOT NULL,
-    phone character varying(255) NOT NULL,
-    password character varying(255) NOT NULL,
-    status boolean NOT NULL
-);
-
-
-ALTER TABLE public.client OWNER TO postgres;
-
---
--- Name: client_id_client_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.client_id_client_seq
+CREATE SEQUENCE public.cliente_id_seq
     START WITH 1
-    INCREMENT BY 50
+    INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
 
 
-ALTER TABLE public.client_id_client_seq OWNER TO postgres;
+ALTER TABLE public.cliente_id_seq OWNER TO postgres;
 
 --
--- Name: movement; Type: TABLE; Schema: public; Owner: postgres
+-- TOC entry 2026 (class 0 OID 0)
+-- Dependencies: 173
+-- Name: cliente_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.movement (
-    id_movement bigint NOT NULL,
-    balance double precision NOT NULL,
-    date date NOT NULL,
-    fk_account bigint NOT NULL,
-    movement_type character varying(255) NOT NULL,
-    value double precision NOT NULL
+ALTER SEQUENCE public.cliente_id_seq OWNED BY public.cliente.id_cliente;
+
+
+--
+-- TOC entry 176 (class 1259 OID 151006)
+-- Name: cuenta; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
+--
+
+CREATE TABLE public.cuenta (
+    id_cuenta bigint NOT NULL,
+    estado boolean NOT NULL,
+    fk_cliente integer NOT NULL,
+    numero_cuenta character varying(255) NOT NULL,
+    saldo_inicial numeric(19,2) NOT NULL,
+    tipo_cuenta character varying(1) NOT NULL
 );
 
 
-ALTER TABLE public.movement OWNER TO postgres;
+ALTER TABLE public.cuenta OWNER TO postgres;
 
 --
--- Name: movement_id_movement_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 175 (class 1259 OID 151004)
+-- Name: cuenta_id_cuenta_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.movement_id_movement_seq
+CREATE SEQUENCE public.cuenta_id_cuenta_seq
     START WITH 1
-    INCREMENT BY 50
+    INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
 
 
-ALTER TABLE public.movement_id_movement_seq OWNER TO postgres;
+ALTER TABLE public.cuenta_id_cuenta_seq OWNER TO postgres;
 
 --
--- Name: person_id_person_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 2027 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: cuenta_id_cuenta_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.person_id_person_seq
+ALTER SEQUENCE public.cuenta_id_cuenta_seq OWNED BY public.cuenta.id_cuenta;
+
+
+--
+-- TOC entry 178 (class 1259 OID 151014)
+-- Name: movimiento; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
+--
+
+CREATE TABLE public.movimiento (
+    id_movimiento bigint NOT NULL,
+    fecha timestamp without time zone NOT NULL,
+    fk_cuenta bigint NOT NULL,
+    saldo numeric(19,2) NOT NULL,
+    tipo_movimiento character varying(1) NOT NULL,
+    valor numeric(19,2) NOT NULL
+);
+
+
+ALTER TABLE public.movimiento OWNER TO postgres;
+
+--
+-- TOC entry 177 (class 1259 OID 151012)
+-- Name: movimiento_id_movimientos_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.movimiento_id_movimientos_seq
     START WITH 1
-    INCREMENT BY 50
+    INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
 
 
-ALTER TABLE public.person_id_person_seq OWNER TO postgres;
+ALTER TABLE public.movimiento_id_movimientos_seq OWNER TO postgres;
 
 --
--- Data for Name: account; Type: TABLE DATA; Schema: public; Owner: postgres
+-- TOC entry 2028 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: movimiento_id_movimientos_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.account VALUES (1, '478758', 'Ahorro', 1, 2000, true);
-INSERT INTO public.account VALUES (2, '225487', 'Corriente', 2, 100, true);
-INSERT INTO public.account VALUES (3, '495878', 'Ahorro', 3, 0, true);
-INSERT INTO public.account VALUES (4, '496825', 'Ahorro', 2, 540, true);
-INSERT INTO public.account VALUES (5, '585545', 'Corriente', 1, 1000, true);
+ALTER SEQUENCE public.movimiento_id_movimientos_seq OWNED BY public.movimiento.id_movimiento;
 
 
 --
--- Data for Name: client; Type: TABLE DATA; Schema: public; Owner: postgres
+-- TOC entry 1893 (class 2604 OID 151001)
+-- Name: id_cliente; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.client VALUES (1, 'Otavalo sn y principal', 20, 'Masculino', '1234567890', 'Jose Lema', '098254785', '1234', true);
-INSERT INTO public.client VALUES (2, 'Amazonas y  NNUU', 22, 'Femenino', '1234567891', 'Marianela Montalvo', '097548965', '5678', true);
-INSERT INTO public.client VALUES (3, '13 junio y Equinoccial', 28, 'Masculino', '1205871222', 'Juan Osorio', '098874587', '1245', true);
-
-
---
--- Data for Name: movement; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-INSERT INTO public.movement VALUES (1, 1425, '2022-06-30', 1, 'Retiro', 575);
-INSERT INTO public.movement VALUES (2, 700, '2022-02-10', 2, 'Deposito', 600);
-INSERT INTO public.movement VALUES (3, 150, '2022-07-02', 3, 'Deposito', 150);
-INSERT INTO public.movement VALUES (4, 0, '2022-02-07', 4, 'Retiro', 540);
+ALTER TABLE ONLY public.cliente ALTER COLUMN id_cliente SET DEFAULT nextval('public.cliente_id_seq'::regclass);
 
 
 --
--- Name: client_id_client_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- TOC entry 1894 (class 2604 OID 151009)
+-- Name: id_cuenta; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.client_id_client_seq', 51, true);
-
-
---
--- Name: movement_id_movement_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.movement_id_movement_seq', 51, true);
+ALTER TABLE ONLY public.cuenta ALTER COLUMN id_cuenta SET DEFAULT nextval('public.cuenta_id_cuenta_seq'::regclass);
 
 
 --
--- Name: person_id_person_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- TOC entry 1895 (class 2604 OID 151017)
+-- Name: id_movimiento; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.person_id_person_seq', 51, true);
-
-
---
--- Name: account account_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.account
-    ADD CONSTRAINT account_pkey PRIMARY KEY (id_account);
+ALTER TABLE ONLY public.movimiento ALTER COLUMN id_movimiento SET DEFAULT nextval('public.movimiento_id_movimientos_seq'::regclass);
 
 
 --
--- Name: client client_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2014 (class 0 OID 150998)
+-- Dependencies: 174
+-- Data for Name: cliente; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.client
-    ADD CONSTRAINT client_pkey PRIMARY KEY (id_client);
-
-
---
--- Name: movement movement_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.movement
-    ADD CONSTRAINT movement_pkey PRIMARY KEY (id_movement);
+COPY public.cliente (id_cliente, direccion, edad, genero, identificacion, nombre, telefono, contrasenia, estado) FROM stdin;
+2	Amazonas y  NNUU	35	F	0704907922	Marianela Montalvo	9999999999	5678	t
+3	13 junio y Equinoccial	41	M	0100561430	Juan Osorio	0908874587	1245	t
+1	Otavalo sn y principal	38	F	0704907922	Jose Lema	0990593431	1234	t
+\.
 
 
 --
--- Name: client uk_powwvjq5dtrded35jufhbmcsd; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2029 (class 0 OID 0)
+-- Dependencies: 173
+-- Name: cliente_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.client
-    ADD CONSTRAINT uk_powwvjq5dtrded35jufhbmcsd UNIQUE (identification);
-
-
---
--- Name: movement fk6uevyj67obsv30kpmn40o0tam; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.movement
-    ADD CONSTRAINT fk6uevyj67obsv30kpmn40o0tam FOREIGN KEY (fk_account) REFERENCES public.account(id_account);
+SELECT pg_catalog.setval('public.cliente_id_seq', 10, true);
 
 
 --
--- Name: account fkcq20y12fsb4owak2xeyxt4uqi; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2016 (class 0 OID 151006)
+-- Dependencies: 176
+-- Data for Name: cuenta; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.account
-    ADD CONSTRAINT fkcq20y12fsb4owak2xeyxt4uqi FOREIGN KEY (fk_client) REFERENCES public.client(id_client);
+COPY public.cuenta (id_cuenta, estado, fk_cliente, numero_cuenta, saldo_inicial, tipo_cuenta) FROM stdin;
+2	t	1	478758	100.00	C
+1	t	2	225487	2000.00	A
+3	t	3	495878	0.00	A
+4	t	2	496825	100.00	A
+5	t	1	585545	1000.00	C
+7	t	2	478758	2000.00	A
+8	t	2	478754	100.00	A
+\.
 
+
+--
+-- TOC entry 2030 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: cuenta_id_cuenta_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.cuenta_id_cuenta_seq', 8, true);
+
+
+--
+-- TOC entry 2018 (class 0 OID 151014)
+-- Dependencies: 178
+-- Data for Name: movimiento; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.movimiento (id_movimiento, fecha, fk_cuenta, saldo, tipo_movimiento, valor) FROM stdin;
+1	2024-09-04 00:00:00	1	150.00	D	250.00
+3	2023-04-21 00:00:00	1	200.00	D	50.00
+5	2023-04-21 01:56:31.604132	1	125.00	R	-25.00
+6	2023-04-21 01:59:34.8267	1	250.00	D	100.00
+7	2023-04-21 11:01:44.033477	1	1150.00	D	1000.00
+8	2023-04-21 11:02:24.527254	1	140.00	R	-10.00
+9	2023-04-21 11:04:00.033184	1	1150.00	D	1000.00
+10	2023-04-21 11:05:58.277359	1	93.00	R	-57.00
+11	2023-04-21 11:07:33.912808	1	1150.00	D	1000.00
+12	2023-04-21 11:08:45.186122	5	1000.00	D	1000.00
+13	2023-04-21 11:10:48.981033	5	900.00	R	-100.00
+14	2023-04-21 11:11:08.027097	5	325.00	R	-575.00
+17	2023-04-20 00:00:00	7	2050.00	D	50.00
+18	2023-04-20 00:00:00	8	-1900.00	D	2000.00
+\.
+
+
+--
+-- TOC entry 2031 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: movimiento_id_movimientos_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.movimiento_id_movimientos_seq', 18, true);
+
+
+--
+-- TOC entry 1897 (class 2606 OID 151003)
+-- Name: cliente_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
+--
+
+ALTER TABLE ONLY public.cliente
+    ADD CONSTRAINT cliente_pkey PRIMARY KEY (id_cliente);
+
+
+--
+-- TOC entry 1899 (class 2606 OID 151011)
+-- Name: cuenta_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
+--
+
+ALTER TABLE ONLY public.cuenta
+    ADD CONSTRAINT cuenta_pkey PRIMARY KEY (id_cuenta);
+
+
+--
+-- TOC entry 1901 (class 2606 OID 151019)
+-- Name: movimiento_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
+--
+
+ALTER TABLE ONLY public.movimiento
+    ADD CONSTRAINT movimiento_pkey PRIMARY KEY (id_movimiento);
+
+
+--
+-- TOC entry 1903 (class 2606 OID 151025)
+-- Name: fk8veysyanipny5mpudj13t8873; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.movimiento
+    ADD CONSTRAINT fk8veysyanipny5mpudj13t8873 FOREIGN KEY (fk_cuenta) REFERENCES public.cuenta(id_cuenta);
+
+
+--
+-- TOC entry 1902 (class 2606 OID 151020)
+-- Name: fk_cuenta_cliente; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cuenta
+    ADD CONSTRAINT fk_cuenta_cliente FOREIGN KEY (fk_cliente) REFERENCES public.cliente(id_cliente);
+
+
+--
+-- TOC entry 2025 (class 0 OID 0)
+-- Dependencies: 6
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2023-05-02 10:47:23
 
 --
 -- PostgreSQL database dump complete
 --
-
