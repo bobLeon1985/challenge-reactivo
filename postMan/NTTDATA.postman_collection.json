@@ -1,0 +1,417 @@
+{
+	"info": {
+		"_postman_id": "c0791855-031a-4fcb-97b1-1cd7f6fb8fb0",
+		"name": "NTTDATA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23185818",
+		"_collection_link": "https://restless-satellite-781758.postman.co/workspace/Team-Workspace~378ba1af-bcef-45ff-8318-81d508067c96/collection/23185818-c0791855-031a-4fcb-97b1-1cd7f6fb8fb0?action=share&creator=23185818&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Cliente",
+			"item": [
+				{
+					"name": "Cliente-Crear",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Perez\",\r\n    \"genero\": \"F\",\r\n    \"edad\": 35,\r\n    \"identificacion\": \"0555555555\",\r\n    \"direccion\": \"Amazonas y  NNUU\",\r\n    \"telefono\": \"097548965\",\r\n    \"contrasenia\": \"5678\",\r\n    \"estado\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cliente-Actualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Jose Lema\",\r\n    \"genero\":\"F\",\r\n    \"edad\":38,\r\n    \"identificacion\": \"0704907922\",\r\n    \"direccion\":\"Otavalo sn y principal\",\r\n    \"telefono\":\"0990593431\",\r\n    \"contrasenia\":\"1234\",\r\n    \"estado\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/clientes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"clientes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cliente-Listar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Encoding",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8090/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cliente-Eliminar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/clientes/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"clientes",
+								"9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cuentas",
+			"item": [
+				{
+					"name": "Cuentas-Crear",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountNumber\": \"478754\",\r\n    \"accountType\": \"A\",\r\n    \"initialBalance\": 2000,\r\n    \"status\": true,\r\n    \"id\":2\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/cuentas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"cuentas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cuentas-Listar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/cuentas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"cuentas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cuentas-Actualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idCuenta\":3,\r\n    \"numeroCuenta\": 225487,\r\n    \"tipoCuenta\": \"C\",\r\n    \"saldoInicial\":100,\r\n    \"estado\": true,\r\n    \"idCliente\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/ms-nndata/api/account",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"ms-nndata",
+								"api",
+								"account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cuentas-Eliminar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/ms-nndata/api/account/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"ms-nndata",
+								"api",
+								"account",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Movimientos",
+			"item": [
+				{
+					"name": "Movimientos-Transaccion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"numeroCuenta\":\"478758\",\r\n    \"tipoMovimiento\":\"D\",\r\n    \"valor\":50,\r\n    \"idCuenta\":1\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/ms-nndata/api/movimientos/movimientodecuenta",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"ms-nndata",
+								"api",
+								"movimientos",
+								"movimientodecuenta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Movimientos-Listar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/movimientos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"movimientos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Movimientos-Actualizar",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\":\"2023-04-21T00:00:00\",\r\n    \"movementType\":\"D\",\r\n    \"value\":100,\r\n    \"accountNumber\":\"478754\",\r\n    \"accountType\":\"A\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/movimientos/18",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"movimientos",
+								"18"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Movimientos-Eliminar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/ms-nndata/api/movimientos/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"ms-nndata",
+								"api",
+								"movimientos",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Movimientos-Crear",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\":\"2023-04-21T00:00:00\",\r\n    \"movementType\":\"D\",\r\n    \"value\":50,\r\n    \"accountNumber\":\"478754\",\r\n    \"accountType\":\"A\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/movimientos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"movimientos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Movimientos-Reportes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/ms-nndata/api/movimientos/reporte?fechaInicio=2023-04-20&fechaFin=2023-04-22&idCliente=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"ms-nndata",
+								"api",
+								"movimientos",
+								"reporte"
+							],
+							"query": [
+								{
+									"key": "fechaInicio",
+									"value": "2023-04-20"
+								},
+								{
+									"key": "fechaFin",
+									"value": "2023-04-22"
+								},
+								{
+									"key": "idCliente",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
