@@ -26,7 +26,7 @@ public class MockUtils {
                 .accountType("Ahorro")
                 .initialBalance(200.00)
                 .status(Boolean.TRUE)
-                .identification("1234567890")
+                .identificacion("1234567890")
                 .name("Jose Lema")
                 .build();
     }
