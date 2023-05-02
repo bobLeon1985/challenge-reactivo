@@ -1,6 +1,7 @@
 package aplication.programming.nttdata.utils;
 
 import aplication.programming.nttdata.dto.ClienteDto;
+import aplication.programming.nttdata.dto.MovimientoDto;
 import aplication.programming.nttdata.enums.TipoCuentaEnum;
 import aplication.programming.nttdata.enums.TipoGeneroEnum;
 import aplication.programming.nttdata.enums.TipoMovimientoEnums;
@@ -69,6 +70,16 @@ public class MockUtils {
 
     public static MovementRequestVO buildMovementRequestVO(){
         return MovementRequestVO.builder()
+                .date(Date.valueOf(LocalDate.now()))
+                .movementType("Retiro")
+                .value(100.00)
+                .accountNumber("12345")
+                .accountType("Ahorro")
+                .build();
+    }
+
+    public static MovimientoDto buildMovimientoDto(){
+        return MovimientoDto.builder()
                 .date(Date.valueOf(LocalDate.now()))
                 .movementType("Retiro")
                 .value(100.00)

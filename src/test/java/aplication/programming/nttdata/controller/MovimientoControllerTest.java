@@ -32,7 +32,7 @@ class MovimientoControllerTest {
     void create() {
         Mockito.when(movementService.registrar(Mockito.any()))
                 .thenReturn(Mono.just(new MovementResponseVO()));
-        StepVerifier.create(movimientoController.registrar(MockUtils.buildMovementRequestVO()))
+        StepVerifier.create(movimientoController.registrar(MockUtils.buildMovimientoDto()))
                 .consumeNextWith(response -> Assertions.assertEquals(HttpStatus.OK, response.getStatusCode()))
                 .expectComplete()
                 .verify();
@@ -52,7 +52,7 @@ class MovimientoControllerTest {
     void update() {
         Mockito.when(movementService.actualizar(Mockito.any(), Mockito.any()))
                 .thenReturn(Mono.empty());
-        StepVerifier.create(movimientoController.actualizar(1L, MockUtils.buildMovementRequestVO()))
+        StepVerifier.create(movimientoController.actualizar(1L, MockUtils.buildMovimientoDto()))
                 .consumeNextWith(response -> Assertions.assertEquals(HttpStatus.OK, response.getStatusCode()))
                 .expectComplete()
                 .verify();

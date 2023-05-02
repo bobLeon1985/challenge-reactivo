@@ -28,7 +28,7 @@ class ClientServiceImplTest {
     void create(){
         Mockito.when(clienteRepository.save(Mockito.any()))
                 .thenReturn(Mono.just(MockUtils.buildClient()));
-        StepVerifier.create(clientService.create(MockUtils.buildClient()))
+        StepVerifier.create(clientService.create(MockUtils.buildClientDto()))
                 .consumeNextWith(Assertions::assertNotNull)
                 .expectComplete()
                 .verify();
@@ -38,7 +38,7 @@ class ClientServiceImplTest {
     void createFail(){
         Mockito.when(clienteRepository.save(Mockito.any()))
                 .thenReturn(Mono.error(BankError.NTT001));
-        StepVerifier.create(clientService.create(MockUtils.buildClient()))
+        StepVerifier.create(clientService.create(MockUtils.buildClientDto()))
                 .expectError()
                 .verify();
     }
@@ -66,7 +66,7 @@ class ClientServiceImplTest {
     void update() {
         Mockito.when(clienteRepository.save(Mockito.any()))
                 .thenReturn(Mono.empty());
-        StepVerifier.create(clientService.update(1L, MockUtils.buildClient()))
+        StepVerifier.create(clientService.update(1L, MockUtils.buildClientDto()))
                 .expectComplete()
                 .verify();
     }
@@ -75,7 +75,7 @@ class ClientServiceImplTest {
     void updateFail() {
         Mockito.when(clienteRepository.save(Mockito.any()))
                 .thenReturn(Mono.error(BankError.NTT008));
-        StepVerifier.create(clientService.update(1L, MockUtils.buildClient()))
+        StepVerifier.create(clientService.update(1L, MockUtils.buildClientDto()))
                 .expectError()
                 .verify();
     }

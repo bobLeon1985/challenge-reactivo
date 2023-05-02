@@ -40,7 +40,7 @@ class MovementServiceImplTest {
                 .thenReturn(Mono.just(200.00));
         Mockito.when(movimientoRepository.save(Mockito.any()))
                 .thenReturn(Mono.just(MockUtils.buildMovement()));
-        StepVerifier.create(movementService.registrar(MockUtils.buildMovementRequestVO()))
+        StepVerifier.create(movementService.registrar(MockUtils.buildMovimientoDto()))
                 .consumeNextWith(Assertions::assertNotNull)
                 .expectComplete()
                 .verify();
@@ -54,7 +54,7 @@ class MovementServiceImplTest {
                 .thenReturn(Mono.just(800.00));
         Mockito.when(movimientoRepository.save(Mockito.any()))
                 .thenReturn(Mono.just(MockUtils.buildMovement()));
-        StepVerifier.create(movementService.registrar(MockUtils.buildMovementRequestVO()))
+        StepVerifier.create(movementService.registrar(MockUtils.buildMovimientoDto()))
                 .expectError()
                 .verify();
     }
@@ -67,7 +67,7 @@ class MovementServiceImplTest {
                 .thenReturn(Mono.just(800.00));
         Mockito.when(movimientoRepository.save(Mockito.any()))
                 .thenReturn(Mono.error(BankError.NTT011));
-        StepVerifier.create(movementService.registrar(MockUtils.buildMovementRequestVO()))
+        StepVerifier.create(movementService.registrar(MockUtils.buildMovimientoDto()))
                 .expectError()
                 .verify();
     }
@@ -92,7 +92,7 @@ class MovementServiceImplTest {
                 .thenReturn(Mono.just(200.00));
         Mockito.when(movimientoRepository.save(Mockito.any()))
                 .thenReturn(Mono.empty());
-        StepVerifier.create(movementService.actualizar(1L, MockUtils.buildMovementRequestVO()))
+        StepVerifier.create(movementService.actualizar(1L, MockUtils.buildMovimientoDto()))
                 .expectComplete()
                 .verify();
     }
@@ -105,7 +105,7 @@ class MovementServiceImplTest {
                 .thenReturn(Mono.just(200.00));
         Mockito.when(movimientoRepository.save(Mockito.any()))
                 .thenReturn(Mono.empty());
-        StepVerifier.create(movementService.actualizar(1L, MockUtils.buildMovementRequestVO()))
+        StepVerifier.create(movementService.actualizar(1L, MockUtils.buildMovimientoDto()))
                 .expectError()
                 .verify();
     }
