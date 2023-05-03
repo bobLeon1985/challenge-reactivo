@@ -1,6 +1,7 @@
 package com.nttdata.utils;
 
 import com.nttdata.dto.ClienteDto;
+import com.nttdata.dto.CuentaDto;
 import com.nttdata.dto.MovimientoDto;
 import com.nttdata.enums.TipoCuentaEnum;
 import com.nttdata.enums.TipoGeneroEnum;
@@ -14,6 +15,7 @@ import com.nttdata.vo.response.AccountResponseVO;
 import com.nttdata.vo.response.MovementResponseVO;
 import com.nttdata.vo.response.StatementResponseVO;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 
@@ -117,11 +119,32 @@ public class MockUtils {
 
     public static Cuenta buildAccount(){
         Cuenta account = new Cuenta();
-        account.setIdCliente(1L);
+        account.setIdCuenta(1L);
         account.setNumeroCuenta("178496");
         account.setTipoCuenta(TipoCuentaEnum.A);
         account.setSaldoInicial(200.00);
         account.setEstado(true);
+        return account;
+    }
+
+    public static CuentaDto buildCuentaDto(){
+        CuentaDto account = new CuentaDto();
+        account.setIdCliente(1L);
+        account.setNumeroCuenta("178496");
+        account.setTipoCuenta(TipoCuentaEnum.A);
+        account.setSaldoInicial(BigDecimal.valueOf(200.00));
+        account.setEstado(true);
+        account.setName("");
+        return account;
+    }
+    public static CuentaDto buildCuentaDtoResponse(){
+        CuentaDto account = new CuentaDto();
+        account.setIdCuenta(1L);
+        account.setNumeroCuenta("178496");
+        account.setTipoCuenta(TipoCuentaEnum.A);
+        account.setSaldoInicial(BigDecimal.valueOf(200.00));
+        account.setEstado(true);
+        account.setName("Pepito Perez");
         return account;
     }
 

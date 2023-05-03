@@ -2,6 +2,7 @@ package com.nttdata.services.impl;
 
 import com.nttdata.common.exception.BankError;
 import com.nttdata.dto.CuentaDto;
+import com.nttdata.mapper.Mapper;
 import com.nttdata.model.Cuenta;
 import com.nttdata.repository.CuentaRepository;
 import com.nttdata.repository.ClienteRepository;
@@ -25,7 +26,7 @@ public class CuentaServicioImpl implements ICuentaServicio {
     @Autowired
     private ClienteRepository clienteRepository;
     @Autowired
-    @Qualifier("cuentaMapper")
+    @Qualifier("modelMapper")
     private ModelMapper mapper;
 
     @Override
@@ -38,21 +39,17 @@ public class CuentaServicioImpl implements ICuentaServicio {
                     return Mono.error(BankError.NTT001);
                 })
                 .doOnSuccess(success -> log.info("Client successfully obtained"))
-                .flatMap(client -> {
-                            Cuenta cuenta = mapper.map(request, Cuenta.class);
-                            cuenta.setIdCliente(client.getIdCliente());
-                            return cuentaRepository.save(cuenta)
-                                    .onErrorResume(error -> {
-                                        log.error("An error occurred while trying to save the customer account. Detail = {}", error.getMessage());
-                                        return Mono.error(BankError.NTT002);
-                                    })
-                                    .doOnSuccess(success -> log.info("Customer account successfully saved"))
-                                    .map(accountResponse -> {
-                                        CuentaDto cuentaDto = mapper.map(accountResponse, CuentaDto.class);
-                                        cuentaDto.setName(client.getNombre());
-                                        return cuentaDto;
-                                    });
-                        }
+                .flatMap(client ->
+                        cuentaRepository.save(Mapper.INSTANCE.cuentaDTotoCuenta(request, client.getIdCliente()))
+                                .onErrorResume(error -> {
+                                    log.error("An error occurred while trying to save the customer account. Detail = {}", error.getMessage());
+                                    return Mono.error(BankError.NTT002);
+                                })
+                                .doOnSuccess(success -> log.info("Customer account successfully saved"))
+                                .map(accountResponse ->
+                                        Mapper.INSTANCE.cuentaToCuentaDto(accountResponse, client.getNombre())
+                                )
+
                 )
                 .doOnSuccess(success -> log.info("Client account creation process completed successfully"));
     }

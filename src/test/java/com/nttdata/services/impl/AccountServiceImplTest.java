@@ -1,43 +1,54 @@
 package com.nttdata.services.impl;
 
+import com.nttdata.mapper.Mapper;
+import com.nttdata.model.Cuenta;
 import com.nttdata.utils.MockUtils;
-import com.nttdata.common.exception.BankError;
 import com.nttdata.repository.CuentaRepository;
 import com.nttdata.repository.ClienteRepository;
+import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+
 
 @SpringBootTest
 @ContextConfiguration(classes = {AccountServiceImplTest.class})
 class AccountServiceImplTest {
 
+    @InjectMocks
+    private CuentaServicioImpl accountService;
     @Mock
     private CuentaRepository cuentaRepository;
     @Mock
     private ClienteRepository clienteRepository;
-    @InjectMocks
-    private CuentaServicioImpl accountService;
-
-   /* @Test
+    @MockBean
+    private Mapper mapper;
+    @Test
     void create() {
         Mockito.when(clienteRepository.findById(Mockito.anyLong()))
-                        .thenReturn(Mono.just(MockUtils.buildClient()));
-        Mockito.when(cuentaRepository.save(Mockito.any()))
+                .thenReturn(Mono.just(MockUtils.buildClient()));
+        Mockito.when(mapper.cuentaDTotoCuenta(Mockito.any(), Mockito.anyLong())).thenReturn(MockUtils.buildAccount());
+        Mockito.when(cuentaRepository.save(any()))
                 .thenReturn(Mono.just(MockUtils.buildAccount()));
-        StepVerifier.create(accountService.registrar(MockUtils.buildAccountRequestVO()))
+        Mockito.when(mapper.cuentaToCuentaDto(Mockito.any(), Mockito.anyString())).thenReturn(MockUtils.buildCuentaDtoResponse());
+        StepVerifier.create(accountService.registrar(MockUtils.buildCuentaDto()))
                 .consumeNextWith(Assertions::assertNotNull)
                 .expectComplete()
                 .verify();
     }
-
+/*
     @Test
     void createFail() {
         Mockito.when(clienteRepository.findByIdentificacion(Mockito.any()))
