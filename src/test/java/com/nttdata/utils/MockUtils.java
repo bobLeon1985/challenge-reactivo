@@ -45,7 +45,7 @@ public class MockUtils {
     }
     public static Cliente buildClient (){
         return Cliente.builder()
-                .idCliente(Long.valueOf(1))
+                .idCliente(1L)
                 .identificacion("1234567890")
                 .nombre("Jose Lema")
                 .genero(TipoGeneroEnum.F)
@@ -127,9 +127,30 @@ public class MockUtils {
         return account;
     }
 
+    public static Cuenta buildAccountAll(){
+        Cuenta account = new Cuenta();
+        account.setIdCuenta(1L);
+        account.setNumeroCuenta("178496");
+        account.setTipoCuenta(TipoCuentaEnum.A);
+        account.setSaldoInicial(200.00);
+        account.setEstado(true);
+        account.setIdCliente(1L);
+        return account;
+    }
+
     public static CuentaDto buildCuentaDto(){
         CuentaDto account = new CuentaDto();
         account.setIdCliente(1L);
+        account.setNumeroCuenta("178496");
+        account.setTipoCuenta(TipoCuentaEnum.A);
+        account.setSaldoInicial(BigDecimal.valueOf(200.00));
+        account.setEstado(true);
+        account.setName("");
+        return account;
+    }
+    public static CuentaDto buildCuentaDtoUpdate(){
+        CuentaDto account = new CuentaDto();
+        account.setIdCuenta(1L);
         account.setNumeroCuenta("178496");
         account.setTipoCuenta(TipoCuentaEnum.A);
         account.setSaldoInicial(BigDecimal.valueOf(200.00));

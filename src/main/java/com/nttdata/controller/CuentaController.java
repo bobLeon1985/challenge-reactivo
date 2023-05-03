@@ -2,7 +2,6 @@ package com.nttdata.controller;
 
 import com.nttdata.dto.CuentaDto;
 import com.nttdata.services.ICuentaServicio;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +18,7 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/cuentas")
 public class CuentaController {
 
-    @Autowired
-    private ICuentaServicio cuentaServicio;
+    private final ICuentaServicio cuentaServicio;
 
     @PostMapping
     public Mono<ResponseEntity<CuentaDto>> registrar(@RequestBody CuentaDto request){
@@ -43,5 +41,9 @@ public class CuentaController {
     public Mono<ResponseEntity<String>> eliminar(@PathVariable Long idCuenta){
         return cuentaServicio.eliminar(idCuenta)
                 .thenReturn(ResponseEntity.ok().body("Account deleted successfully"));
+    }
+
+    public CuentaController(ICuentaServicio cuentaServicio) {
+        this.cuentaServicio = cuentaServicio;
     }
 }

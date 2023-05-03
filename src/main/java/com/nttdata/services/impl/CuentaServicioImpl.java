@@ -3,7 +3,6 @@ package com.nttdata.services.impl;
 import com.nttdata.common.exception.BankError;
 import com.nttdata.dto.CuentaDto;
 import com.nttdata.mapper.Mapper;
-import com.nttdata.model.Cuenta;
 import com.nttdata.repository.CuentaRepository;
 import com.nttdata.repository.ClienteRepository;
 import com.nttdata.services.ICuentaServicio;
@@ -63,11 +62,9 @@ public class CuentaServicioImpl implements ICuentaServicio {
                     return Mono.error(BankError.NTT003);
                 })
                 .flatMap(account -> clienteRepository.findById(account.getIdCliente())
-                        .map(client -> {
-                            CuentaDto cuentaDto = mapper.map(account, CuentaDto.class);
-                            cuentaDto.setName(client.getNombre());
-                            return cuentaDto;
-                        }));
+                        .map(client ->
+                                Mapper.INSTANCE.cuentaToCuentaDto(account, client.getNombre())
+                        ));
     }
 
     @Override
@@ -75,17 +72,15 @@ public class CuentaServicioImpl implements ICuentaServicio {
     public Mono<Void> actualizar(Long idAccount, CuentaDto request) {
         log.info("Start account update process");
         return cuentaRepository.findById(request.getIdCuenta())
-                .flatMap(cuentaResponse -> {
-                    Cuenta cuenta = mapper.map(request, Cuenta.class);
-                    cuenta.setIdCliente(cuentaResponse.getIdCliente());
-                    return cuentaRepository.save(cuenta)
-                            .onErrorResume(error -> {
-                                log.error("An error occurred while updating the customer account. Detail = {}", error.getMessage());
-                                return Mono.error(BankError.NTT004);
-                            })
-                            .doOnSuccess(success -> log.info("Account update successful"))
-                            .flatMap(response -> Mono.empty());
-                });
+                .flatMap(cuentaResponse ->
+                        cuentaRepository.save(Mapper.INSTANCE.cuentaDTotoCuenta(request, cuentaResponse.getIdCliente()))
+                                .onErrorResume(error -> {
+                                    log.error("An error occurred while updating the customer account. Detail = {}", error.getMessage());
+                                    return Mono.error(BankError.NTT004);
+                                })
+                                .doOnSuccess(success -> log.info("Account update successful"))
+                                .flatMap(response -> Mono.empty())
+                );
     }
 
     @Override

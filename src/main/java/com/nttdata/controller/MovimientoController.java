@@ -4,21 +4,18 @@ import com.nttdata.dto.MovimientoDto;
 import com.nttdata.services.IMovimientoServicio;
 import com.nttdata.vo.response.MovementResponseVO;
 import com.nttdata.vo.response.StatementResponseVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import javax.annotation.Resource;
 import java.sql.Date;
 
 @RestController
 @RequestMapping("/movimientos")
 public class MovimientoController {
 
-    @Autowired
-    private IMovimientoServicio movimientoServicio;
+    private final IMovimientoServicio movimientoServicio;
 
     @PostMapping
     public Mono<ResponseEntity<MovementResponseVO>> registrar(@RequestBody MovimientoDto request) {
@@ -47,6 +44,10 @@ public class MovimientoController {
     public Mono<ResponseEntity<Flux<StatementResponseVO>>> reporte(@RequestParam Date fechaInicio, @RequestParam Date fechaFin,
                                                                    @RequestParam String identificacion) {
         return Mono.just(ResponseEntity.ok().body(movimientoServicio.reporte(fechaInicio, fechaFin, identificacion)));
+    }
+
+    public MovimientoController(IMovimientoServicio movimientoServicio) {
+        this.movimientoServicio = movimientoServicio;
     }
 
 }
