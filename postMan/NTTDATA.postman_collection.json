@@ -131,7 +131,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"numeroCuenta\": \"696969\",\r\n    \"tipoCuenta\": \"A\",\r\n    \"saldoInicial\": 2000,\r\n    \"estado\": true,\r\n    \"idCliente\":2\r\n    \r\n}",
+							"raw": "{\r\n    \"numeroCuenta\": \"9898989\",\r\n    \"tipoCuenta\": \"A\",\r\n    \"saldoInicial\": 2000,\r\n    \"estado\": true,\r\n    \"idCliente\":2\r\n    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -178,7 +178,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"idCuenta\":13,\r\n    \"numeroCuenta\": \"123456\",\r\n    \"tipoCuenta\": \"C\",\r\n    \"saldoInicial\":2000,\r\n    \"estado\": true\r\n}",
+							"raw": "{\r\n    \"idCuenta\":2,\r\n    \"numeroCuenta\": \"478758\",\r\n    \"tipoCuenta\": \"C\",\r\n    \"saldoInicial\":2000,\r\n    \"estado\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -186,15 +186,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8090/cuentas/13",
+							"raw": "http://localhost:8090/cuentas",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8090",
 							"path": [
-								"cuentas",
-								"13"
+								"cuentas"
 							]
 						}
 					},
@@ -215,6 +214,26 @@
 							"path": [
 								"cuentas",
 								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cuentas-X-Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/cuentas/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"cuentas",
+								"5"
 							]
 						}
 					},
@@ -282,47 +301,12 @@
 					"response": []
 				},
 				{
-					"name": "Movimientos-Actualizar",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"date\":\"2023-04-21T00:00:00\",\r\n    \"movementType\":\"D\",\r\n    \"value\":2000,\r\n    \"accountNumber\":\"478754\",\r\n    \"accountType\":\"A\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8090/movimientos/18",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8090",
-							"path": [
-								"movimientos",
-								"18"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Movimientos-Eliminar",
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/movimientos/17",
+							"raw": "http://localhost:8090/movimientos/28",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -330,7 +314,7 @@
 							"port": "8090",
 							"path": [
 								"movimientos",
-								"17"
+								"28"
 							]
 						}
 					},
@@ -349,7 +333,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"date\":\"2023-04-21T00:00:00\",\r\n    \"movementType\":\"D\",\r\n    \"value\":50,\r\n    \"accountNumber\":\"478754\",\r\n    \"accountType\":\"A\"\r\n}",
+							"raw": "{\r\n    \"fecha\":\"2023-05-04\",\r\n    \"tipoMovimiento\":\"R\",\r\n    \"valor\":200,\r\n    \"tipoCuenta\":\"A\",\r\n    \"idCuenta\":2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -399,6 +383,26 @@
 									"key": "identificacion",
 									"value": "0704907922"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Movimientos-FK-Cuenta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/movimientos/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"movimientos",
+								"2"
 							]
 						}
 					},
