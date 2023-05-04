@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.4.26
 -- Dumped by pg_dump version 9.4.26
--- Started on 2023-05-02 10:47:22
+-- Started on 2023-05-04 15:43:27
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -21,7 +21,7 @@ SET default_with_oids = false;
 
 --
 -- TOC entry 174 (class 1259 OID 150998)
--- Name: cliente; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
+-- Name: cliente; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE public.cliente (
@@ -65,7 +65,7 @@ ALTER SEQUENCE public.cliente_id_seq OWNED BY public.cliente.id_cliente;
 
 --
 -- TOC entry 176 (class 1259 OID 151006)
--- Name: cuenta; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
+-- Name: cuenta; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE public.cuenta (
@@ -106,7 +106,7 @@ ALTER SEQUENCE public.cuenta_id_cuenta_seq OWNED BY public.cuenta.id_cuenta;
 
 --
 -- TOC entry 178 (class 1259 OID 151014)
--- Name: movimiento; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
+-- Name: movimiento; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE public.movimiento (
@@ -178,7 +178,7 @@ ALTER TABLE ONLY public.movimiento ALTER COLUMN id_movimiento SET DEFAULT nextva
 COPY public.cliente (id_cliente, direccion, edad, genero, identificacion, nombre, telefono, contrasenia, estado) FROM stdin;
 2	Amazonas y  NNUU	35	F	0704907922	Marianela Montalvo	9999999999	5678	t
 3	13 junio y Equinoccial	41	M	0100561430	Juan Osorio	0908874587	1245	t
-1	Otavalo sn y principal	38	F	0704907922	Jose Lema	0990593431	1234	t
+1	Otavalo sn y principal	38	F	0704907921	Jose Lema	0990593431	1234	t
 \.
 
 
@@ -198,13 +198,11 @@ SELECT pg_catalog.setval('public.cliente_id_seq', 10, true);
 --
 
 COPY public.cuenta (id_cuenta, estado, fk_cliente, numero_cuenta, saldo_inicial, tipo_cuenta) FROM stdin;
-2	t	1	478758	100.00	C
 1	t	2	225487	2000.00	A
 3	t	3	495878	0.00	A
-4	t	2	496825	100.00	A
-5	t	1	585545	1000.00	C
-7	t	2	478758	2000.00	A
-8	t	2	478754	100.00	A
+2	t	1	478758	2000.00	A
+4	t	3	496825	100.00	A
+15	t	3	9898989	2000.00	A
 \.
 
 
@@ -214,7 +212,7 @@ COPY public.cuenta (id_cuenta, estado, fk_cliente, numero_cuenta, saldo_inicial,
 -- Name: cuenta_id_cuenta_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.cuenta_id_cuenta_seq', 8, true);
+SELECT pg_catalog.setval('public.cuenta_id_cuenta_seq', 15, true);
 
 
 --
@@ -224,20 +222,14 @@ SELECT pg_catalog.setval('public.cuenta_id_cuenta_seq', 8, true);
 --
 
 COPY public.movimiento (id_movimiento, fecha, fk_cuenta, saldo, tipo_movimiento, valor) FROM stdin;
-1	2024-09-04 00:00:00	1	150.00	D	250.00
-3	2023-04-21 00:00:00	1	200.00	D	50.00
-5	2023-04-21 01:56:31.604132	1	125.00	R	-25.00
-6	2023-04-21 01:59:34.8267	1	250.00	D	100.00
-7	2023-04-21 11:01:44.033477	1	1150.00	D	1000.00
-8	2023-04-21 11:02:24.527254	1	140.00	R	-10.00
-9	2023-04-21 11:04:00.033184	1	1150.00	D	1000.00
-10	2023-04-21 11:05:58.277359	1	93.00	R	-57.00
-11	2023-04-21 11:07:33.912808	1	1150.00	D	1000.00
-12	2023-04-21 11:08:45.186122	5	1000.00	D	1000.00
-13	2023-04-21 11:10:48.981033	5	900.00	R	-100.00
-14	2023-04-21 11:11:08.027097	5	325.00	R	-575.00
-17	2023-04-20 00:00:00	7	2050.00	D	50.00
-18	2023-04-20 00:00:00	8	-1900.00	D	2000.00
+30	2023-05-02 00:00:00	2	1425.00	R	-575.00
+31	2023-05-03 00:00:00	2	1675.00	D	250.00
+33	2023-05-03 00:00:00	2	1575.00	R	-100.00
+34	2023-05-03 00:00:00	4	0.00	R	-100.00
+35	2023-05-03 00:00:00	2	2575.00	D	1000.00
+36	2023-05-04 00:00:00	2	3575.00	D	1000.00
+41	2023-05-03 00:00:00	2	3475.00	R	-100.00
+42	2023-05-03 00:00:00	2	2675.00	R	-800.00
 \.
 
 
@@ -247,12 +239,12 @@ COPY public.movimiento (id_movimiento, fecha, fk_cuenta, saldo, tipo_movimiento,
 -- Name: movimiento_id_movimientos_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.movimiento_id_movimientos_seq', 18, true);
+SELECT pg_catalog.setval('public.movimiento_id_movimientos_seq', 42, true);
 
 
 --
 -- TOC entry 1897 (class 2606 OID 151003)
--- Name: cliente_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
+-- Name: cliente_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY public.cliente
@@ -261,7 +253,7 @@ ALTER TABLE ONLY public.cliente
 
 --
 -- TOC entry 1899 (class 2606 OID 151011)
--- Name: cuenta_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
+-- Name: cuenta_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY public.cuenta
@@ -270,7 +262,7 @@ ALTER TABLE ONLY public.cuenta
 
 --
 -- TOC entry 1901 (class 2606 OID 151019)
--- Name: movimiento_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
+-- Name: movimiento_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY public.movimiento
@@ -307,8 +299,9 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2023-05-02 10:47:23
+-- Completed on 2023-05-04 15:43:27
 
 --
 -- PostgreSQL database dump complete
 --
+
