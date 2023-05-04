@@ -16,10 +16,10 @@ public class MapperConfig {
     }
 
     @Bean("cuentaMapper")
-    public ModelMapper cuentaMapper(){
+    public ModelMapper cuentaMapper() {
         ModelMapper mapper = new ModelMapper();
         TypeMap<CuentaDto, Cuenta> typeMap = mapper.createTypeMap(CuentaDto.class, Cuenta.class);
-        typeMap.addMapping(CuentaDto::getIdCliente, (dest, v)-> dest.setIdCliente((Long) v));
+        typeMap.addMapping(CuentaDto::getIdCliente, (dest, v) -> dest.setIdCliente((Long) v));
         return mapper;
     }
 }

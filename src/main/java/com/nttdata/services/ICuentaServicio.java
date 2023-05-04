@@ -10,9 +10,11 @@ public interface ICuentaServicio {
 
     Mono<CuentaDto> registrar(CuentaDto request);
 
-    Flux<CuentaDto> listar();
+    Flux<CuentaDto> buscar();
 
-    Mono<Void> actualizar(Long idAccount, CuentaDto request);
+    Mono<CuentaDto> buxcarXId (Long id);
+
+    Mono<Void> actualizar(CuentaDto request);
 
     Mono<Void> eliminar(Long idAccount);
 }

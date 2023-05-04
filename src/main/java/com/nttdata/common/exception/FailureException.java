@@ -1,13 +1,13 @@
 package com.nttdata.common.exception;
 
-import lombok.Generated;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Getter
-@Generated
+@Setter
 @RequiredArgsConstructor
 public class FailureException extends RuntimeException {
-    private final Error error;
+    private final ErrorResponse failure;
     private final int errorCode;
 }

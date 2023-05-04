@@ -3,6 +3,7 @@
  */
 package com.nttdata.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -18,21 +19,18 @@ import java.sql.Date;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MovimientoDto {
 
-	@NotNull(message = "The field date can not be null.")
-	private Date date;
+	private Long idMovimiento;
+	private Date fecha;
+	private String tipoMovimiento;
+	private Double valor;
+	private Double saldo;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private String estado;
+	private String numeroCuenta;
+	private String tipoCuenta;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private Long idCuenta;
 
-	@NotNull(message = "The field movementType can not be null.")
-	private String movementType;
-
-	@NotNull(message = "The field value can not be null.")
-	private Double value;
-
-	@NotNull(message = "The field accountNumber can not be null.")
-	private String accountNumber;
-
-	@NotNull(message = "The field accountType can not be null.")
-	private String accountType;
 }

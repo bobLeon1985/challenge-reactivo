@@ -10,7 +10,7 @@ public interface IClienteServicio {
 
     Mono<ClienteDto> registrar(ClienteDto request);
 
-    Flux<ClienteDto> listar();
+    Flux<ClienteDto> buscar();
 
     Mono<Void> actualizar(Long idClient, ClienteDto request);
 

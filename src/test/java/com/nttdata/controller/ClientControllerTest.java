@@ -37,9 +37,9 @@ class ClientControllerTest {
 
     @Test
     void allClient() {
-        Mockito.when(clienteServicio.listar())
+        Mockito.when(clienteServicio.buscar())
                 .thenReturn(Flux.just(MockUtils.buildClientDto()));
-        StepVerifier.create(clienteController.listar())
+        StepVerifier.create(clienteController.buscar())
                 .consumeNextWith(response -> Assertions.assertEquals(HttpStatus.OK, response.getStatusCode()))
                 .expectComplete()
                 .verify();

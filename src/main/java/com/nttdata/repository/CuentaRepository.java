@@ -10,7 +10,8 @@ import reactor.core.publisher.Mono;
 @Repository
 public interface CuentaRepository extends ReactiveCrudRepository<Cuenta, Long> {
 
-    @Query("select a.* from cuenta a where a.numero_cuenta = :accountNumber and a.tipo_cuenta = :accountType")
-    Mono<Cuenta> findByNumeroCuentaByTipoCuenta(String accountNumber, String accountType);
+    @Query("select a.* from cuenta a where a.numero_cuenta = :accountNumber")
+    Mono<Cuenta> findByNumeroCuenta(String accountNumber);
+
     Flux<Cuenta> findCuentaByIdCliente(Long idClient);
 }

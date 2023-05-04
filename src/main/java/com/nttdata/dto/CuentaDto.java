@@ -30,5 +30,5 @@ public class CuentaDto {
     private Boolean estado;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long idCliente;
-    private String name;
+    private String cliente;
 }

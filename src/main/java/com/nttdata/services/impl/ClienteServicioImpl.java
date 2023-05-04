@@ -1,6 +1,6 @@
 package com.nttdata.services.impl;
 
-import com.nttdata.common.exception.BankError;
+import com.nttdata.common.exception.BankMessageError;
 import com.nttdata.dto.ClienteDto;
 import com.nttdata.model.Cliente;
 import com.nttdata.repository.ClienteRepository;
@@ -32,18 +32,18 @@ public class ClienteServicioImpl implements IClienteServicio {
         return clienteRepository.save(cliente)
                 .onErrorResume(error -> {
                     log.error("An error occurred while creating the client. Detail = {}", error.getMessage());
-                    return Mono.error(BankError.NTT006);
+                    return Mono.error(BankMessageError.NTT006);
                 })
                 .doOnSuccess(success -> log.info("Client created successfully"))
                 .map(responseClient -> mapper.map(responseClient , ClienteDto.class));
     }
 
     @Override
-    public Flux<ClienteDto> listar() {
+    public Flux<ClienteDto> buscar() {
         return clienteRepository.findAll()
                 .onErrorResume(error -> {
                     log.error("An error occurred while searching for customers. Detail = {}", error.getMessage());
-                    return Mono.error(BankError.NTT007);
+                    return Mono.error(BankMessageError.NTT007);
                 })
                 .map(cliente -> mapper.map(cliente,ClienteDto.class));
     }
@@ -59,7 +59,7 @@ public class ClienteServicioImpl implements IClienteServicio {
                })
                .onErrorResume(error -> {
                    log.error("An error occurred while updating the client. Detail = {}", error.getMessage());
-                   return Mono.error(BankError.NTT008);
+                   return Mono.error(BankMessageError.NTT008);
                })
                .doOnSuccess(success -> log.info("Client successfully upgraded"))
                .then();
@@ -71,7 +71,7 @@ public class ClienteServicioImpl implements IClienteServicio {
        return clienteRepository.deleteById(idClient)
                .onErrorResume(error -> {
                    log.error("An error occurred while deleting the client. Detail = {}", error.getMessage());
-                   return Mono.error(BankError.NTT009);
+                   return Mono.error(BankMessageError.NTT009);
                })
                .doOnSuccess(success -> log.info("Client successfully removed"));
     }

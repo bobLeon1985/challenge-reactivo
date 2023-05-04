@@ -83,11 +83,11 @@ public class MockUtils {
 
     public static MovimientoDto buildMovimientoDto(){
         return MovimientoDto.builder()
-                .date(Date.valueOf(LocalDate.now()))
-                .movementType("Retiro")
-                .value(100.00)
-                .accountNumber("12345")
-                .accountType("Ahorro")
+                .fecha(Date.valueOf(LocalDate.now()))
+                .tipoMovimiento("R")
+                .valor(100.00)
+                .numeroCuenta("12345")
+                .tipoCuenta("Ahorro")
                 .build();
     }
 
@@ -145,7 +145,7 @@ public class MockUtils {
         account.setTipoCuenta(TipoCuentaEnum.A);
         account.setSaldoInicial(BigDecimal.valueOf(200.00));
         account.setEstado(true);
-        account.setName("");
+        account.setCliente("");
         return account;
     }
     public static CuentaDto buildCuentaDtoUpdate(){
@@ -155,7 +155,7 @@ public class MockUtils {
         account.setTipoCuenta(TipoCuentaEnum.A);
         account.setSaldoInicial(BigDecimal.valueOf(200.00));
         account.setEstado(true);
-        account.setName("");
+        account.setCliente("");
         return account;
     }
     public static CuentaDto buildCuentaDtoResponse(){
@@ -165,7 +165,7 @@ public class MockUtils {
         account.setTipoCuenta(TipoCuentaEnum.A);
         account.setSaldoInicial(BigDecimal.valueOf(200.00));
         account.setEstado(true);
-        account.setName("Pepito Perez");
+        account.setCliente("Pepito Perez");
         return account;
     }
 

@@ -16,19 +16,14 @@ import java.sql.Date;
 @EqualsAndHashCode(callSuper = false)
 public class MovementRequestVO {
 
-    @NotNull(message = "The field date can not be null.")
     private Date date;
 
-    @NotNull(message = "The field movementType can not be null.")
     private String movementType;
 
-    @NotNull(message = "The field value can not be null.")
     private Double value;
 
-    @NotNull(message = "The field accountNumber can not be null.")
     private String accountNumber;
 
-    @NotNull(message = "The field accountType can not be null.")
     private String accountType;
 
 }

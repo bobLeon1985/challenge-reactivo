@@ -2,6 +2,7 @@ package com.nttdata.controller;
 
 import com.nttdata.dto.ClienteDto;
 import com.nttdata.services.IClienteServicio;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -11,8 +12,8 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/clientes")
 public class ClienteController {
 
-
-    private final IClienteServicio clienteServicio;
+    @Autowired
+    private  IClienteServicio clienteServicio;
 
 
     @PostMapping
@@ -22,8 +23,8 @@ public class ClienteController {
     }
 
     @GetMapping
-    public Mono<ResponseEntity<Flux<ClienteDto>>> listar() {
-        return Mono.just(ResponseEntity.ok().body(clienteServicio.listar()));
+    public Mono<ResponseEntity<Flux<ClienteDto>>> buscar() {
+        return Mono.just(ResponseEntity.ok().body(clienteServicio.buscar()));
     }
 
     @PutMapping("/{idCliente}")
@@ -38,7 +39,4 @@ public class ClienteController {
                 .thenReturn(ResponseEntity.ok().body("User deleted successfully"));
     }
 
-    public ClienteController(IClienteServicio clienteServicio) {
-        this.clienteServicio = clienteServicio;
-    }
 }

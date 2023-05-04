@@ -1,6 +1,6 @@
 package com.nttdata.services.impl;
 
-import com.nttdata.common.exception.BankError;
+import com.nttdata.common.exception.BankMessageError;
 import com.nttdata.mapper.Mapper;
 import com.nttdata.utils.MockUtils;
 import com.nttdata.repository.CuentaRepository;
@@ -56,7 +56,7 @@ class AccountServiceImplTest {
         Mockito.when(clienteRepository.findById(Mockito.anyLong()))
                 .thenReturn(Mono.just(MockUtils.buildClient()));
         Mockito.when(cuentaRepository.save(Mockito.any()))
-                .thenReturn(Mono.error(BankError.NTT004));
+                .thenReturn(Mono.error(BankMessageError.NTT002));
         StepVerifier.create(cuentaServicio.registrar(MockUtils.buildCuentaDto()))
                 .expectError()
                 .verify();
@@ -67,7 +67,7 @@ class AccountServiceImplTest {
     void allAccount() {
         Mockito.when(cuentaRepository.findAll()).thenReturn(Flux.just(MockUtils.buildAccountAll()));
         Mockito.when(clienteRepository.findById(Mockito.anyLong())).thenReturn(Mono.just(MockUtils.buildClient()));
-        StepVerifier.create(cuentaServicio.listar())
+        StepVerifier.create(cuentaServicio.buscar())
                 .consumeNextWith(Assertions::assertNotNull)
                 .expectComplete()
                 .verify();
@@ -77,7 +77,7 @@ class AccountServiceImplTest {
     void update() {
         Mockito.when(cuentaRepository.findById(Mockito.anyLong())).thenReturn(Mono.just(MockUtils.buildAccountAll()));
         Mockito.when(cuentaRepository.save(Mockito.any())).thenReturn(Mono.empty());
-        StepVerifier.create(cuentaServicio.actualizar(1L, MockUtils.buildCuentaDtoUpdate()))
+        StepVerifier.create(cuentaServicio.actualizar( MockUtils.buildCuentaDtoUpdate()))
                 .expectComplete()
                 .verify();
     }

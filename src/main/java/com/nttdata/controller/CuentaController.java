@@ -2,6 +2,7 @@ package com.nttdata.controller;
 
 import com.nttdata.dto.CuentaDto;
 import com.nttdata.services.ICuentaServicio;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +18,8 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/cuentas")
 public class CuentaController {
-
-    private final ICuentaServicio cuentaServicio;
+    @Autowired
+    private ICuentaServicio cuentaServicio;
 
     @PostMapping
     public Mono<ResponseEntity<CuentaDto>> registrar(@RequestBody CuentaDto request){
@@ -27,13 +28,18 @@ public class CuentaController {
     }
 
     @GetMapping
-    public Mono<ResponseEntity<Flux<CuentaDto>>> listar(){
-        return Mono.just(ResponseEntity.ok().body(cuentaServicio.listar()));
+    public Mono<ResponseEntity<Flux<CuentaDto>>> buscar(){
+        return Mono.just(ResponseEntity.ok().body(cuentaServicio.buscar()));
     }
 
-    @PutMapping("/{idCuenta}")
-    public Mono<ResponseEntity<String>> actualizar(@PathVariable Long idCuenta, @RequestBody CuentaDto request){
-        return cuentaServicio.actualizar(idCuenta, request)
+    @GetMapping("/{id}")
+    public Mono<ResponseEntity<Mono<CuentaDto>>> buscarXCuenta(@PathVariable("id") Long id){
+        return Mono.just(ResponseEntity.ok().body(cuentaServicio.buxcarXId(id)));
+    }
+
+    @PutMapping
+    public Mono<ResponseEntity<String>> actualizar(@RequestBody CuentaDto request){
+        return cuentaServicio.actualizar(request)
                 .thenReturn(ResponseEntity.ok().body("Account updated successfully"));
     }
 
@@ -43,7 +49,4 @@ public class CuentaController {
                 .thenReturn(ResponseEntity.ok().body("Account deleted successfully"));
     }
 
-    public CuentaController(ICuentaServicio cuentaServicio) {
-        this.cuentaServicio = cuentaServicio;
-    }
 }

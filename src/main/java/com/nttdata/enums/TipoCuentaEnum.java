@@ -14,7 +14,7 @@ public enum TipoCuentaEnum {
 	A("AHORRO"), C("CORRIENTE");
 
 	@Getter
-	private String descripcion;
+	private final String descripcion;
 
 	TipoCuentaEnum(String descripcion) {
 		this.descripcion = descripcion;

@@ -38,9 +38,9 @@ class CuentaControllerTest {
 
     @Test
     void allAccount() {
-        Mockito.when(accountService.listar())
+        Mockito.when(accountService.buscar())
                 .thenReturn(Flux.just(MockUtils.buildCuentaDto()));
-        StepVerifier.create(cuentaController.listar())
+        StepVerifier.create(cuentaController.buscar())
                 .consumeNextWith(response -> Assertions.assertEquals(HttpStatus.OK, response.getStatusCode()))
                 .expectComplete()
                 .verify();
@@ -48,9 +48,9 @@ class CuentaControllerTest {
 
     @Test
     void update() {
-        Mockito.when(accountService.actualizar(Mockito.any(), Mockito.any()))
+        Mockito.when(accountService.actualizar(Mockito.any()))
                 .thenReturn(Mono.empty());
-        StepVerifier.create(cuentaController.actualizar(1L, MockUtils.buildCuentaDto()))
+        StepVerifier.create(cuentaController.actualizar( MockUtils.buildCuentaDto()))
                 .consumeNextWith(response -> Assertions.assertEquals(HttpStatus.OK, response.getStatusCode()))
                 .expectComplete()
                 .verify();

@@ -9,18 +9,20 @@ import reactor.core.publisher.Mono;
 
 import java.sql.Date;
 
-
 @Validated
 public interface IMovimientoServicio {
 
-    Mono<MovementResponseVO> registrar(MovimientoDto request);
+    Mono<MovimientoDto> registrarMovimiento(MovimientoDto request);
 
-    Flux<MovementResponseVO> listar();
+    Flux<MovimientoDto> buscar();
+
+    Flux<MovimientoDto> buscarXCuenta(Long numerocuenta);
+
 
     Mono<Void> actualizar(Long idMovimiento, MovimientoDto request);
 
-    Mono<Void>  eliminar(Long idMovimiento);
+    Mono<Boolean>  eliminar(Long idMovimiento);
 
-    Flux<StatementResponseVO> reporte(Date fechaInicio, Date fechaFin, String identificacion);
+
 
 }

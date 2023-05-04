@@ -2,8 +2,10 @@ package com.nttdata.controller;
 
 import com.nttdata.dto.MovimientoDto;
 import com.nttdata.services.IMovimientoServicio;
-import com.nttdata.vo.response.MovementResponseVO;
+import com.nttdata.services.IReporteServicio;
 import com.nttdata.vo.response.StatementResponseVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -14,18 +16,25 @@ import java.sql.Date;
 @RestController
 @RequestMapping("/movimientos")
 public class MovimientoController {
+    @Autowired
+    private IMovimientoServicio movimientoServicio;
 
-    private final IMovimientoServicio movimientoServicio;
-
+    @Autowired
+    private IReporteServicio ireporteServicio;
     @PostMapping
-    public Mono<ResponseEntity<MovementResponseVO>> registrar(@RequestBody MovimientoDto request) {
-        return movimientoServicio.registrar(request)
+    public Mono<ResponseEntity<MovimientoDto>> registrar(@RequestBody MovimientoDto request) {
+        return movimientoServicio.registrarMovimiento(request)
                 .map(response -> ResponseEntity.ok().body(response));
     }
 
     @GetMapping
-    public Mono<ResponseEntity<Flux<MovementResponseVO>>> listar() {
-        return Mono.just(ResponseEntity.ok().body(movimientoServicio.listar()));
+    public Mono<ResponseEntity<Flux<MovimientoDto>>> buscar() {
+        return Mono.just(ResponseEntity.ok().body(movimientoServicio.buscar()));
+    }
+
+    @GetMapping("/{fkCuenta}")
+    public Mono<ResponseEntity<Flux<MovimientoDto>>> buscarXCuenta(@PathVariable("fkCuenta") Long fkCuenta) {
+        return Mono.just(ResponseEntity.ok().body(movimientoServicio.buscarXCuenta(fkCuenta)));
     }
 
     @PutMapping("/{idMovimiento}")
@@ -37,17 +46,14 @@ public class MovimientoController {
     @DeleteMapping("/{idMovimiento}")
     public Mono<ResponseEntity<String>> eliminar(@PathVariable Long idMovimiento) {
         return movimientoServicio.eliminar(idMovimiento)
-                .thenReturn(ResponseEntity.ok().body("Move successfully removed"));
+                .map(aBoolean -> ResponseEntity.ok().body("Move successfully removed"))
+                .defaultIfEmpty(new ResponseEntity<>("Id not found", HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/reporte")
     public Mono<ResponseEntity<Flux<StatementResponseVO>>> reporte(@RequestParam Date fechaInicio, @RequestParam Date fechaFin,
                                                                    @RequestParam String identificacion) {
-        return Mono.just(ResponseEntity.ok().body(movimientoServicio.reporte(fechaInicio, fechaFin, identificacion)));
-    }
-
-    public MovimientoController(IMovimientoServicio movimientoServicio) {
-        this.movimientoServicio = movimientoServicio;
+        return Mono.just(ResponseEntity.ok().body(ireporteServicio.reporte(fechaInicio, fechaFin, identificacion)));
     }
 
 }
